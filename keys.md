@@ -54,12 +54,23 @@ Prefix is **`C-x`** (`ctrl+x`). Press the prefix, then the key.
 | key         | action                          |
 |-------------|---------------------------------|
 | `C-x b`     | goto / session navigator        |
+| `C-x f` / `C-x F` | git file viewer — split / own tab (herdr-file-viewer plugin) |
 | `C-x t`     | toggle sidebar                  |
 | `C-x s`     | settings                        |
 | `C-x ?`     | help (built-in keybind overlay) |
 | `C-x q`     | detach                          |
 | `C-x S-r`   | reload config                   |
 | `C-x S-o`   | notifications                   |
+
+## Ask the agent (herdr skill)
+
+A Claude session running in a herdr pane can drive herdr. Plain-English asks:
+
+- **"review PR 1234 in a new workspace"** — spins up a workspace, checks out the PR, launches a Claude agent on it
+- **"split this pane and run the tests / dev server, tell me when it's ready"**
+- **"spawn an agent in a new tab to do X and wait for it to finish"**
+- **"open the git file viewer"** — herdr-file-viewer plugin pane (or press `C-x f`)
+- **"show me the file references you cited"** — renders cited `file:line` as a web page (`file-reference` skill / `/file-reference`)
 
 ## Copy mode (hardcoded in herdr, not emacs)
 

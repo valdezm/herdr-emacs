@@ -78,12 +78,23 @@ then just ask, in plain english:
 - "split this pane and run the tests in it"
 - "spawn an agent in a new tab to do X and wait for it to finish"
 - "watch the server-log pane and tell me when it's ready"
+- **"review PR 1234 in a new workspace"** — spins up a workspace, `gh pr checkout`s it, launches a Claude agent set to review it
+- **"open the git file viewer"** — opens the [`herdr-file-viewer`](https://github.com/smarzban/herdr-file-viewer) plugin pane (if installed)
+- **"show me the file references you cited"** — renders the cited `file:line` as a highlighted web page via the `file-reference` Claude skill (`/file-reference`) — distinct from the file-viewer plugin, which browses the tree
 - **"open the settings in the right pane"** — the agent splits right and opens your config:
 
   ```bash
   herdr pane split --current --direction right --focus      # → new pane id, e.g. w4:p8
   herdr pane run <pane_id> "vi ~/.config/herdr/config.toml"
   ```
+
+**Optional — git file viewer keys.** Install the plugin and bind `C-x f` / `C-x F` (split / own tab):
+
+```bash
+herdr plugin install smarzban/herdr-file-viewer
+```
+
+then uncomment the `[[keys.command]]` block at the bottom of [`config.toml`](./config.toml) and run `herdr server reload-config`.
 
 ### keybinding cheat sheet in its own pane
 

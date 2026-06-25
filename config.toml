@@ -60,3 +60,15 @@ navigate_pane_left = "ctrl+b"
 navigate_pane_down = "ctrl+n"
 navigate_pane_up = "ctrl+p"
 navigate_pane_right = "ctrl+f"
+
+# ── optional: git file viewer (needs the herdr-file-viewer plugin) ──
+# Uncomment after: herdr plugin install smarzban/herdr-file-viewer
+# [[keys.command]]
+# key = "prefix+f"           # C-x f   open git file viewer (split pane)
+# type = "shell"
+# command = "herdr plugin action invoke open-file-viewer --plugin herdr-file-viewer"
+#
+# [[keys.command]]
+# key = "prefix+shift+f"     # C-x F   open git file viewer in its own tab
+# type = "shell"
+# command = "herdr plugin action invoke open-file-viewer-tab --plugin herdr-file-viewer"

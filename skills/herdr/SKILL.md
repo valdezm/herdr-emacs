@@ -285,6 +285,39 @@ herdr wait agent-status 1-1 --status done --timeout 120000
 herdr pane read 1-1 --source recent --lines 100
 ```
 
+### review a pull request in its own workspace
+
+Spin up a dedicated workspace, check out the PR, and launch a Claude agent set to review it:
+
+```bash
+PANE=$(herdr workspace create --cwd /path/to/repo --label "review PR 1234" --no-focus \
+  | python3 -c 'import sys,json; print(json.load(sys.stdin)["result"]["root_pane"]["pane_id"])')
+herdr pane run "$PANE" "gh pr checkout 1234 && claude"
+herdr wait output "$PANE" --match ">" --timeout 20000
+herdr pane run "$PANE" "review this PR for correctness and security; summarize findings"
+```
+
+For an isolated git worktree (don't touch the main checkout), swap the first call for
+`herdr worktree create --cwd /path/to/repo --branch <pr-branch> --label "review PR 1234"` and run
+the agent in the worktree's root pane.
+
+### open the git file viewer (herdr-file-viewer plugin)
+
+If the `herdr-file-viewer` plugin is installed (`herdr plugin install smarzban/herdr-file-viewer`),
+open the git-aware tree browser in a pane or its own tab — idempotent (invoke again to focus, again to close):
+
+```bash
+herdr plugin action invoke open-file-viewer --plugin herdr-file-viewer        # split pane
+herdr plugin action invoke open-file-viewer-tab --plugin herdr-file-viewer    # own tab
+```
+
+### show the file references you cited
+
+The `file:line` references in a Claude reply render as a highlighted web page via the separate
+**`file-reference`** Claude skill — when the user says "show me those files" / "open the references",
+invoke `/file-reference`. (That's a Claude Code skill for *cited lines*; the herdr-file-viewer plugin
+above is a herdr pane that *browses the tree* — different tools.)
+
 ## notes
 
 - `workspace list`, `workspace create`, `tab list`, `tab create`, `tab get`, `tab focus`, `tab rename`, `tab close`, `pane list`, `pane get`, `pane split`, `wait output`, and `wait agent-status` print json on success.
