@@ -44,6 +44,8 @@ That's it. The keymap applies immediately (`install.sh` runs `herdr server reloa
 
 Optionally, add `--hook` (`./install.sh --hook`) to wire a `herdr()` shell wrapper so **every herdr launch/attach auto-opens an "info" workspace with the keybindings cheat sheet** (see below). It only triggers on launch/attach, is idempotent (never duplicates the workspace), and is removable by deleting the `herdr-emacs cheat-sheet hook` block from your shell rc.
 
+For **rendered markdown** (styled cheat-sheet panes + MD files rendered in the file viewer, instead of raw `##`/`|`), add `--renderers` (`./install.sh --renderers`, or run `./install-renderers.sh`). It installs `glow` (markdown) + `bat` (syntax) to `~/.local/bin` with no sudo — GitHub release binaries on Linux, Homebrew on macOS. Press `v` in the file viewer to toggle rendered markdown.
+
 ### emacs keybindings
 
 upstream is tmux-like (`ctrl+b` prefix). this remaps the prefix to **`ctrl+x`** with emacs window commands. the full keymap is [`config.toml`](./config.toml) (installed by `./install.sh`); the full key list is [`keys.md`](./keys.md). highlights:

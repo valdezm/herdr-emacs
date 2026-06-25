@@ -74,7 +74,7 @@ A Claude session running in a herdr pane can drive herdr. Plain-English asks:
 
 ## File viewer (herdr-file-viewer plugin)
 
-Open: **`C-x f`** (split) / **`C-x F`** (own tab). It's a two-column TUI — **tree on the left, file content on the right**. (Install `bat` for syntax highlighting; otherwise plain text.)
+Open: **`C-x f`** (split) / **`C-x F`** (own tab). It's a two-column TUI — **tree on the left, file content on the right**. Press **`v`** to cycle the content view, including **rendered markdown** (MD files shown styled, not raw). Renderers: `glow` (markdown) + `bat` (syntax) — install with `./install-renderers.sh`; without them, plain text.
 
 | key | action |
 |-----|--------|

@@ -2,9 +2,11 @@
 # Install the herdr-emacs keymap into ~/.config/herdr/config.toml.
 # Backs up any existing config first, then reloads the running herdr server.
 #
-#   ./install.sh           install the keymap
-#   ./install.sh --hook    also wire a herdr() shell wrapper so every launch/attach
-#                          auto-opens an "info" workspace with the keybindings cheat sheet
+#   ./install.sh                  install the keymap
+#   ./install.sh --hook           also wire a herdr() shell wrapper so every launch/attach
+#                                 auto-opens an "info" workspace with the keybindings cheat sheet
+#   ./install.sh --renderers      also install glow (rendered markdown) + bat (syntax) to ~/.local/bin
+#   ./install.sh --hook --renderers   both
 #
 # The Claude Code *skill* installs separately (no copy needed):
 #   claude plugin marketplace add valdezm/herdr-emacs
@@ -66,6 +68,9 @@ install_hook() {
 }
 
 install_keymap
-case "${1-}" in
-  --hook) install_hook ;;
-esac
+for arg in "$@"; do
+  case "$arg" in
+    --hook) install_hook ;;
+    --renderers) bash "$repo/install-renderers.sh" ;;
+  esac
+done
