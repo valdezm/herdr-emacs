@@ -1,0 +1,61 @@
+# herdr-emacs keymap — drop into ~/.config/herdr/config.toml then run:
+#   herdr server reload-config
+# Or run ./install.sh from this repo (backs up any existing config first).
+#
+# Prefix is C-x. Revert anytime: herdr config reset-keys && herdr server reload-config
+
+[keys]
+prefix = "ctrl+x"
+
+# ── panes (emacs window commands) ──
+cycle_pane_next = "prefix+o"         # C-x o   other-window: move between panes
+cycle_pane_previous = "prefix+shift+tab"
+split_horizontal = "prefix+2"        # C-x 2   split below
+split_vertical = "prefix+3"          # C-x 3   split right
+zoom = "prefix+1"                    # C-x 1   maximize current pane
+close_pane = "prefix+0"              # C-x 0   close pane
+rename_pane = "prefix+shift+p"
+resize_mode = "prefix+r"
+edit_scrollback = "prefix+e"
+focus_pane_left = "prefix+ctrl+b"    # C-x C-b
+focus_pane_down = "prefix+ctrl+n"    # C-x C-n
+focus_pane_up = "prefix+ctrl+p"      # C-x C-p
+focus_pane_right = "prefix+ctrl+f"   # C-x C-f
+
+# ── tabs (buffer-like) ──
+new_tab = "prefix+c"
+previous_tab = "prefix+p"            # C-x p
+next_tab = "prefix+n"                # C-x n
+close_tab = "prefix+k"               # C-x k   kill-buffer
+rename_tab = "prefix+shift+t"
+switch_tab = ""                      # disabled: frees digit keys for the pane splits above
+
+# ── workspaces (project/frame-like) ──
+previous_workspace = "prefix+up"     # C-x up
+next_workspace = "prefix+down"       # C-x down
+workspace_picker = "prefix+w"        # C-x w
+switch_workspace = "prefix+shift+1..9"
+new_workspace = "prefix+shift+n"
+close_workspace = "prefix+shift+d"
+rename_workspace = "prefix+shift+w"
+new_worktree = "prefix+shift+g"
+
+# ── agents ──
+previous_agent = "prefix+left"       # C-x left
+next_agent = "prefix+right"          # C-x right
+focus_agent = "prefix+alt+1..9"
+
+# ── global / misc ──
+goto = "prefix+b"                    # C-x b   session navigator (switch-buffer)
+toggle_sidebar = "prefix+t"          # C-x t
+open_notification_target = "prefix+shift+o"
+settings = "prefix+s"
+help = "prefix+?"
+detach = "prefix+q"
+reload_config = "prefix+shift+r"
+
+# ── navigate-mode local movement (arrows also work) ──
+navigate_pane_left = "ctrl+b"
+navigate_pane_down = "ctrl+n"
+navigate_pane_up = "ctrl+p"
+navigate_pane_right = "ctrl+f"

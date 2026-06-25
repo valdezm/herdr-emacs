@@ -1,0 +1,17 @@
+{
+  "name": "herdr-emacs",
+  "metadata": {
+    "description": "herdr-emacs: the herdr agent skill plus an emacs keymap for herdr."
+  },
+  "owner": {
+    "name": "valdezm",
+    "url": "https://github.com/valdezm"
+  },
+  "plugins": [
+    {
+      "name": "herdr",
+      "source": "./",
+      "description": "Drive herdr (terminal agent multiplexer) from inside a Claude Code pane: split panes, spawn sibling agents, tail logs, and wait for output over herdr's local socket."
+    }
+  ]
+}

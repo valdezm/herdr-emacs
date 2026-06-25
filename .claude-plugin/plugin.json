@@ -1,0 +1,11 @@
+{
+  "name": "herdr",
+  "version": "0.1.0",
+  "description": "Drive herdr from inside a Claude Code pane: split panes, spawn sibling agents, tail logs, and wait for output over herdr's local socket.",
+  "author": {
+    "name": "valdezm",
+    "url": "https://github.com/valdezm"
+  },
+  "homepage": "https://github.com/valdezm/herdr-emacs",
+  "license": "AGPL-3.0-or-later"
+}
