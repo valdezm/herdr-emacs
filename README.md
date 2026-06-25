@@ -100,7 +100,7 @@ then uncomment the `[[keys.command]]` block at the bottom of [`config.toml`](./c
 
 [`keys.md`](./keys.md) is a scannable cheat sheet. [`keys-view.sh`](./keys-view.sh) renders it (glow/bat/mdcat if present, else `less`), and [`ensure-info.sh`](./ensure-info.sh) opens it in a dedicated **info** workspace.
 
-**Automatic (recommended):** run `./install.sh --hook` once. It adds a `herdr()` shell wrapper that runs `ensure-info.sh` on every herdr launch/attach, so the cheat-sheet **info** workspace is always present — on a fresh machine, a new named session, or after you've closed it. `ensure-info.sh` is idempotent: it creates the workspace only if one labelled `info` isn't already there, so it never duplicates.
+**Automatic (recommended):** run `./install.sh --hook` once. It adds a `herdr()` shell wrapper that runs `ensure-info.sh` on every herdr launch/attach, so the cheat-sheet **info** workspace is always present — on a fresh machine, a new named session, or after you've closed it. `ensure-info.sh` is idempotent: it creates the workspace only if one labelled `info` isn't already there, so it never duplicates. The workspace is **split into panes**, one section group per pane — keymap (left), file-viewer keys (top-right), agent recipes (bottom-right) — so the sections don't all share one scroll. (`keys-view.sh "<section>" ...` renders only the named `##` sections of `keys.md`.)
 
 **Manual (one-off):** `bash ensure-info.sh` any time, or build it by hand:
 
