@@ -1,6 +1,6 @@
 {
   "name": "herdr",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Drive herdr from inside a Claude Code pane: split panes, spawn sibling agents, tail logs, and wait for output over herdr's local socket.",
   "author": {
     "name": "valdezm",
