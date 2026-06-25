@@ -7,6 +7,7 @@ Prefix is **`C-x`** (`ctrl+x`). Press the prefix, then the key.
 | key              | action                          |
 |------------------|---------------------------------|
 | `C-x o`          | move between panes (other-window) |
+| `C-x Tab`        | last-used pane (MRU, like VS Code `Ctrl+Tab`) |
 | `C-x C-b/C-n/C-p/C-f` | focus pane left / down / up / right |
 | `C-x 2`          | split below                     |
 | `C-x 3`          | split right                     |

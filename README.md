@@ -42,6 +42,8 @@ claude plugin install herdr@herdr-emacs
 
 That's it. The keymap applies immediately (`install.sh` runs `herdr server reload-config`); the skill loads in every Claude Code project from the next session.
 
+Optionally, add `--hook` (`./install.sh --hook`) to wire a `herdr()` shell wrapper so **every herdr launch/attach auto-opens an "info" workspace with the keybindings cheat sheet** (see below). It only triggers on launch/attach, is idempotent (never duplicates the workspace), and is removable by deleting the `herdr-emacs cheat-sheet hook` block from your shell rc.
+
 ### emacs keybindings
 
 upstream is tmux-like (`ctrl+b` prefix). this remaps the prefix to **`ctrl+x`** with emacs window commands. the full keymap is [`config.toml`](./config.toml) (installed by `./install.sh`); the full key list is [`keys.md`](./keys.md). highlights:
@@ -49,6 +51,7 @@ upstream is tmux-like (`ctrl+b` prefix). this remaps the prefix to **`ctrl+x`** 
 | emacs key | action |
 |-----------|--------|
 | `C-x o` | move between panes (other-window) |
+| `C-x Tab` | last-used pane (MRU, like VS Code `Ctrl+Tab`) |
 | `C-x C-b/C-n/C-p/C-f` | focus pane left/down/up/right |
 | `C-x 2` / `C-x 3` | split below / split right |
 | `C-x 1` / `C-x 0` | maximize / close pane |
@@ -63,6 +66,7 @@ gotchas:
 
 - `C-x` is now both the herdr prefix and your editor's quit/command key. to send a **literal** `ctrl+x` into a program in a pane (e.g. to quit nano), press `ctrl+x ctrl+x`.
 - **copy mode** keys (`h/j/k/l w/b/e`) are hardcoded in the binary — no config knob, can't be made emacs without an upstream change.
+- **previous/next workspace (`C-x ↑/↓`) walk the list positionally — they are not MRU**, so they don't jump to the last-used workspace the way VS Code's `Ctrl+Tab` jumps to the last file. herdr's only MRU "jump to last" is `last_pane` (`C-x Tab`), which is panes, not workspaces. For workspaces, use the by-name picker `C-x w` or jump-by-number `C-x S-1..9`. A true last-used-workspace toggle would need an upstream code change.
 - revert anytime: `herdr config reset-keys` then `herdr server reload-config`.
 
 ### the Claude Code skill
@@ -83,11 +87,15 @@ then just ask, in plain english:
 
 ### keybinding cheat sheet in its own pane
 
-[`keys.md`](./keys.md) is a scannable cheat sheet. open it in a dedicated **info** workspace so it's always one `C-x ↑/↓` away:
+[`keys.md`](./keys.md) is a scannable cheat sheet. [`keys-view.sh`](./keys-view.sh) renders it (glow/bat/mdcat if present, else `less`), and [`ensure-info.sh`](./ensure-info.sh) opens it in a dedicated **info** workspace.
+
+**Automatic (recommended):** run `./install.sh --hook` once. It adds a `herdr()` shell wrapper that runs `ensure-info.sh` on every herdr launch/attach, so the cheat-sheet **info** workspace is always present — on a fresh machine, a new named session, or after you've closed it. `ensure-info.sh` is idempotent: it creates the workspace only if one labelled `info` isn't already there, so it never duplicates.
+
+**Manual (one-off):** `bash ensure-info.sh` any time, or build it by hand:
 
 ```bash
 ws=$(herdr workspace create --label info --no-focus)        # returns the new workspace + root pane id
-herdr pane run <root_pane_id> "bash $(pwd)/keys-view.sh"     # renders keys.md (glow/bat/mdcat if present, else less)
+herdr pane run <root_pane_id> "bash $(pwd)/keys-view.sh"
 ```
 
 herdr persists workspaces across restarts, so once created the cheat-sheet pane stays. (herdr also has a built-in keybind overlay on `C-x ?`.)

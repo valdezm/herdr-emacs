@@ -10,6 +10,7 @@ prefix = "ctrl+x"
 # ── panes (emacs window commands) ──
 cycle_pane_next = "prefix+o"         # C-x o   other-window: move between panes
 cycle_pane_previous = "prefix+shift+tab"
+last_pane = "prefix+tab"             # C-x Tab  jump to last-used pane (MRU, VS Code Ctrl+Tab style)
 split_horizontal = "prefix+2"        # C-x 2   split below
 split_vertical = "prefix+3"          # C-x 3   split right
 zoom = "prefix+1"                    # C-x 1   maximize current pane
