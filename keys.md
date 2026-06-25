@@ -72,6 +72,28 @@ A Claude session running in a herdr pane can drive herdr. Plain-English asks:
 - **"open the git file viewer"** — herdr-file-viewer plugin pane (or press `C-x f`)
 - **"show me the file references you cited"** — renders cited `file:line` as a web page (`file-reference` skill / `/file-reference`)
 
+## File viewer (herdr-file-viewer plugin)
+
+Open: **`C-x f`** (split) / **`C-x F`** (own tab). It's a two-column TUI — **tree on the left, file content on the right**. (Install `bat` for syntax highlighting; otherwise plain text.)
+
+| key | action |
+|-----|--------|
+| `j`/`k` or `↑`/`↓` | move tree cursor (or scroll content when it's focused) |
+| `→`/`l` | expand directory |
+| `←`/`h` | collapse directory |
+| `Tab` | **move focus between tree and content** — read a file without zooming |
+| `Enter` | open file **zoom mode** (full-screen content — looks like an editor) |
+| `z` | toggle zoom (hide/show the tree) |
+| `q` / `Esc` | back out of zoom; press again to **close the viewer** |
+| `c` | show changed files only · `b` toggle diff baseline · `i` show gitignored |
+| `v` | cycle content view (e.g. rendered markdown) · `w` wrap lines |
+| `e` | open selected file in `$EDITOR` (vi) |
+| `y` / `Y` | copy selected file's repo-relative / absolute path |
+| `W` | switch git worktree (re-root the viewer) · `r` refresh git state |
+| `<` / `>` | narrow / widen the tree column |
+
+**Tip:** to just *read* a file, select it and press `Tab` (focus the content pane) — don't press `Enter` unless you want full-screen zoom. `Esc` returns to the two-column view.
+
 ## Copy mode (hardcoded in herdr, not emacs)
 
 `h/j/k/l` move · `w/b/e` by word · `{ }` by paragraph · `v`/`space` select · `y`/`enter` copy · `q`/`esc` exit
