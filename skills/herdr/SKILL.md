@@ -301,15 +301,33 @@ For an isolated git worktree (don't touch the main checkout), swap the first cal
 `herdr worktree create --cwd /path/to/repo --branch <pr-branch> --label "review PR 1234"` and run
 the agent in the worktree's root pane.
 
-### open the git file viewer (herdr-file-viewer plugin)
+### open the file viewer (herdr-file-viewer plugin)
 
 If the `herdr-file-viewer` plugin is installed (`herdr plugin install smarzban/herdr-file-viewer`),
-open the git-aware tree browser in a pane or its own tab — idempotent (invoke again to focus, again to close):
+open its keyboard-driven tree browser. In the **current** work context — idempotent (invoke again to
+focus, again to close):
 
 ```bash
 herdr plugin action invoke open-file-viewer --plugin herdr-file-viewer        # split pane
 herdr plugin action invoke open-file-viewer-tab --plugin herdr-file-viewer    # own tab
 ```
+
+To browse an **arbitrary directory** (root the viewer at any folder — works on **git OR non-git**
+dirs; a github repo is not required), launch the binary by absolute path in a pane with that cwd —
+the plugin's own `--cwd` fails because its declared pane command is a relative path:
+
+```bash
+BIN=$(herdr plugin list --json | python3 -c 'import sys,json,os
+p=json.load(sys.stdin)["result"]["plugins"]
+fv=next(x for x in p if x["name"]=="herdr-file-viewer")
+print(os.path.join(os.path.dirname(fv["manifest_path"]),"target/release/herdr-file-viewer"))')
+P=$(herdr pane split --current --direction right --no-focus --cwd /any/dir \
+  | python3 -c 'import sys,json;print(json.load(sys.stdin)["result"]["pane"]["pane_id"])')
+herdr pane run "$P" "$BIN"
+```
+
+It's a browser (opens at the dir root); it won't auto-jump to a specific line — for exact cited
+`file:line`, use the `file-reference` skill below.
 
 ### show the file references you cited
 
