@@ -3,10 +3,14 @@
 # Backs up any existing config first, then reloads the running herdr server.
 #
 #   ./install.sh                  install the keymap
-#   ./install.sh --hook           also wire a herdr() shell wrapper so every launch/attach
-#                                 auto-opens an "info" workspace with the keybindings cheat sheet
+#   ./install.sh --plugin         link the herdr-emacs herdr plugin so a session.created event
+#                                 auto-opens the info cheat-sheet workspace (no shell-rc edit; preferred)
+#   ./install.sh --hook           instead wire a herdr() shell wrapper for the same auto-open
+#                                 (use when you can't/won't install a herdr plugin)
 #   ./install.sh --renderers      also install glow (rendered markdown) + bat (syntax) to ~/.local/bin
-#   ./install.sh --hook --renderers   both
+#   ./install.sh --plugin --renderers   keymap + native auto-open + renderers
+#
+# Published install of the auto-open plugin (no clone needed):  herdr plugin install valdezm/herdr-emacs
 #
 # The Claude Code *skill* installs separately (no copy needed):
 #   claude plugin marketplace add valdezm/herdr-emacs
@@ -67,9 +71,22 @@ install_hook() {
   echo "added herdr launch hook -> $rc (open a new shell to activate)"
 }
 
+install_herdr_plugin() {
+  # Native auto-open: a herdr plugin whose session.created event hook opens the
+  # info workspace on each new session. Cleaner than --hook (no shell-rc edit).
+  if command -v herdr >/dev/null 2>&1; then
+    herdr plugin link "$repo" >/dev/null 2>&1 \
+      && echo "linked herdr plugin 'herdr-emacs' — info workspace auto-opens on each new session" \
+      || echo "could not link herdr plugin (is herdr running? already linked?)"
+  else
+    echo "herdr not on PATH — install it, then: herdr plugin install valdezm/herdr-emacs"
+  fi
+}
+
 install_keymap
 for arg in "$@"; do
   case "$arg" in
+    --plugin) install_herdr_plugin ;;
     --hook) install_hook ;;
     --renderers) bash "$repo/install-renderers.sh" ;;
   esac
