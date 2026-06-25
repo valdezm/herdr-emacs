@@ -19,6 +19,74 @@ workspaces, tabs, panes. mouse-native: click, drag, split. every agent at a glan
 
 ---
 
+## fork: herdr-emacs — emacs keybindings + claude code skill
+
+this is a fork of [ogulcancelik/herdr](https://github.com/ogulcancelik/herdr) that adds two things on top of upstream:
+
+1. an **emacs-style keymap** (`C-x` prefix + emacs window commands), and
+2. step-by-step docs for **installing the `SKILL.md` agent skill into Claude Code**.
+
+everything else tracks upstream — pull their updates with `git fetch upstream && git merge upstream/master`.
+
+### emacs keybindings
+
+upstream is tmux-like (`ctrl+b` prefix). this remaps the prefix to `ctrl+x` with emacs window commands. drop this into `~/.config/herdr/config.toml` and run `herdr server reload-config`:
+
+```toml
+[keys]
+prefix = "ctrl+x"
+
+# emacs window commands (C-x then the key)
+cycle_pane_next = "prefix+o"      # C-x o  other-window: move between panes
+split_horizontal = "prefix+2"     # C-x 2  split below
+split_vertical = "prefix+3"       # C-x 3  split right
+zoom = "prefix+1"                 # C-x 1  maximize current pane
+close_pane = "prefix+0"           # C-x 0  close pane
+switch_tab = ""                   # free the digit keys for the splits above
+open_notification_target = "prefix+shift+o"  # moved off C-x o
+
+# directional pane focus, windmove-style (arrows in navigate mode also work)
+focus_pane_left = "prefix+ctrl+b"
+focus_pane_down = "prefix+ctrl+n"
+focus_pane_up = "prefix+ctrl+p"
+focus_pane_right = "prefix+ctrl+f"
+navigate_pane_left = "ctrl+b"
+navigate_pane_down = "ctrl+n"
+navigate_pane_up = "ctrl+p"
+navigate_pane_right = "ctrl+f"
+```
+
+| emacs key | action |
+|-----------|--------|
+| `C-x` | prefix (enter prefix mode) |
+| `C-x o` | move between panes (other-window) |
+| `C-x 2` / `C-x 3` | split below / split right |
+| `C-x 1` | maximize current pane |
+| `C-x 0` | close pane |
+| `C-x C-b/C-n/C-p/C-f` | focus pane left/down/up/right |
+| `C-x n` / `C-x p` | next / previous tab |
+| `C-x q` | detach |
+
+gotchas:
+
+- `C-x` is now both the herdr prefix and your editor's quit/command key. to send a **literal** `ctrl+x` into a program in a pane (e.g. to quit nano), press `ctrl+x ctrl+x`.
+- **copy mode** keys (`h/j/k/l w/b/e`) are hardcoded in the binary — no config knob, can't be made emacs without an upstream change.
+- revert anytime: `herdr config reset-keys` then `herdr server reload-config`.
+- default terminal editor here is **vi** (`$EDITOR`/`$VISUAL` unset).
+
+### install the SKILL.md skill into Claude Code
+
+[`SKILL.md`](./SKILL.md) lets a Claude Code agent **drive herdr from inside a pane** — split panes, spawn sibling agents, tail logs, wait for output — over herdr's local unix socket. install it at user scope so it loads in every project:
+
+```bash
+mkdir -p ~/.claude/skills/herdr
+cp SKILL.md ~/.claude/skills/herdr/SKILL.md
+```
+
+that's the whole install — it's plain markdown, no build step. the skill activates automatically when a Claude session runs inside a herdr pane (`HERDR_ENV=1`; check with `echo $HERDR_ENV`). then just ask, e.g. "split this pane and run the tests", or "spawn an agent in a new tab to do X and wait for it to finish".
+
+---
+
 ## install
 
 ```bash
