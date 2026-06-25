@@ -337,8 +337,9 @@ the file's row, and `pane send-keys` to select it and open it in zoom (full-scre
 herdr pane send-keys "$P" Down Down Enter   # move to the file's row, Enter opens it zoomed
 ```
 
-(`Down`/`j` move, `Enter` zooms the selected file, `Esc` back to the tree. Install `bat` for syntax
-highlighting; without it the content shows as plain text.)
+(`Down`/`j` move, `Enter` zooms the selected file, `Esc` back to the tree. Press `v` to cycle the
+content view, including **rendered markdown**. Renderers `glow` (markdown) + `bat` (syntax) make
+the viewer render instead of showing plain text — install both via `install-renderers.sh`.)
 
 ### show the file references you cited
 
