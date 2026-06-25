@@ -329,6 +329,17 @@ herdr pane run "$P" "$BIN"
 It's a browser (opens at the dir root); it won't auto-jump to a specific line — for exact cited
 `file:line`, use the `file-reference` skill below.
 
+To **land on a specific file** (the viewer has no file-target arg/env — its launch context only
+carries a directory), root it at the file's **parent dir**, then drive the TUI: `pane read` to find
+the file's row, and `pane send-keys` to select it and open it in zoom (full-screen content):
+
+```bash
+herdr pane send-keys "$P" Down Down Enter   # move to the file's row, Enter opens it zoomed
+```
+
+(`Down`/`j` move, `Enter` zooms the selected file, `Esc` back to the tree. Install `bat` for syntax
+highlighting; without it the content shows as plain text.)
+
 ### show the file references you cited
 
 The `file:line` references in a Claude reply render as a highlighted web page via the separate
